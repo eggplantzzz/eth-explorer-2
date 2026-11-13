@@ -13,16 +13,21 @@ interface State {
  * Keeps a rolling window of the latest `count` blocks.
  * Polls eth_blockNumber and only fetches blocks we haven't seen yet.
  */
-export function useLatestBlocks(count = 10, pollMs = 12_000): State {
+export function useLatestBlocks(count = 10, pollMs = 12_000, pollingEnabled: boolean): State {
   const [state, setState] = useState<State>({
     blocks: [],
-    loading: true,
+    loading: false,
     error: null,
     lastUpdated: null,
   });
   const headRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (!pollingEnabled) return;
+    setState((s) => ({
+      ...s,
+      loading: true
+    }));
     let cancelled = false;
     let inFlight = false;
     headRef.current = null;
@@ -73,7 +78,7 @@ export function useLatestBlocks(count = 10, pollMs = 12_000): State {
       cancelled = true;
       clearInterval(id);
     };
-  }, [count, pollMs]);
+  }, [count, pollMs, pollingEnabled]);
 
   return state;
 }

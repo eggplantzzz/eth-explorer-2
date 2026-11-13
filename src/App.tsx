@@ -11,9 +11,11 @@ const BLOCK_COUNT = 15;
 const POLL_MS = 12_000; // ~1 Ethereum slot
 
 export default function App() {
-  const { blocks, loading, error, lastUpdated } = useLatestBlocks(BLOCK_COUNT, POLL_MS);
+  const [pollingEnabled, setPollingEnabled] = useState<boolean>(false);
   const [selected, setSelected] = useState<number | null>(null);
+  const { blocks, loading, error, lastUpdated } = useLatestBlocks(BLOCK_COUNT, POLL_MS, pollingEnabled);
 
+  const pollingState = pollingEnabled ? "enabled" : "disabled";
   return (
     <div className="app">
       <header className="header">
@@ -25,6 +27,14 @@ export default function App() {
           )}
         </div>
         <BlockSearch onSearch={setSelected} />
+        <div className="toggle">
+          <
+            button
+            onClick={() => setPollingEnabled(!pollingEnabled)}
+          >
+            toggle polling: {pollingState}
+          </button>
+        </div>
       </header>
 
       {error && <div className="panel error">⚠️ {error}</div>}

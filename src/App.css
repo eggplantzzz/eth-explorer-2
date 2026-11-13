@@ -27,7 +27,7 @@ a:hover { text-decoration: underline; }
 .header h1 { display: inline; margin: 0 0.75rem 0 0; font-size: 1.5rem; }
 
 .badge {
-  background: var(--accent); color: white; padding: 0.15rem 0.6rem;
+  background: var(--muted); color: white; padding: 0.15rem 0.6rem;
   border-radius: 999px; font-size: 0.75rem; text-transform: uppercase;
 }
 
@@ -38,6 +38,10 @@ a:hover { text-decoration: underline; }
 }
 .search button, .link-button {
   background: var(--accent); color: white; border: none;
+  padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;
+}
+.toggle button {
+  background: var(--green); color: white; border: none;
   padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;
 }
 .link-button { margin-top: 0.75rem; background: transparent; color: var(--accent); }
