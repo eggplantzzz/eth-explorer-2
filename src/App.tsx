@@ -4,6 +4,7 @@ import { NetworkStats } from "./components/NetworkStats";
 import { BlockList } from "./components/BlockList";
 import { BlockDetails } from "./components/BlockDetails";
 import { BlockSearch } from "./components/BlockSearch";
+import { EtherPrice } from "./components/EtherPrice";
 import { useEtherPrice } from "./hooks/useEtherPrice";
 import { NETWORK } from "./lib/rpc";
 import "./App.css";
@@ -14,7 +15,7 @@ const POLL_MS = 12_000; // ~1 Ethereum slot
 export default function App() {
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);
   const [selected, setSelected] = useState<number | null>(null);
-  const [etherPrice, setEtherPrice] = useState<undefined | number>();
+  const [etherPrice, setEtherPrice] = useState<number>();
   const { blocks, loading, error, lastUpdated } = useLatestBlocks(BLOCK_COUNT, POLL_MS, pollingEnabled);
   useEtherPrice(setEtherPrice);
 
@@ -27,21 +28,6 @@ export default function App() {
         >
             {pollingEnabled ? "Disable" : "Enable"} Polling
         </button>
-      </div>
-    )
-  }
-
-  const currentEtherPrice = function () {
-    if (etherPrice === undefined) {
-      return (
-        <div>
-          Fetching current ether price...
-        </div>
-      )
-    }
-    return (
-      <div>
-        The current price of ether is ${etherPrice.toString()}.
       </div>
     )
   }
@@ -62,13 +48,13 @@ export default function App() {
 
       {error && <div className="panel error">⚠️ {error}</div>}
 
-      {currentEtherPrice()}
+      <EtherPrice etherPrice={etherPrice} />
 
       {loading && blocks.length === 0 ? (
         <div className="panel">Loading latest blocks…</div>
       ) : (
         <>
-          <NetworkStats blocks={blocks} />
+            <NetworkStats blocks={blocks} />
           <main className="grid">
             <BlockList blocks={blocks} selected={selected} onSelect={setSelected} />
             <BlockDetails blockNumber={selected} />
