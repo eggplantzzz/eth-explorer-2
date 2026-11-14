@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { useLatestBlocks } from './hooks/useLatestBlocks';
-import { NetworkStats } from './components/NetworkStats';
-import { BlockList } from './components/BlockList';
-import { BlockDetails } from './components/BlockDetails';
-import { BlockSearch } from './components/BlockSearch';
-import { NETWORK } from './lib/rpc';
-import './App.css';
+import { useState } from "react";
+import { useLatestBlocks } from "./hooks/useLatestBlocks";
+import { NetworkStats } from "./components/NetworkStats";
+import { BlockList } from "./components/BlockList";
+import { BlockDetails } from "./components/BlockDetails";
+import { BlockSearch } from "./components/BlockSearch";
+import { NETWORK } from "./lib/rpc";
+import "./App.css";
 
 const BLOCK_COUNT = 15;
 const POLL_MS = 12_000; // ~1 Ethereum slot
+
 
 export default function App() {
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);

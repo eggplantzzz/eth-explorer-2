@@ -5,10 +5,10 @@ export function formatUnits(value: bigint, decimals: number, precision = 4): str
   const whole = v / base;
   const frac = (v % base)
     .toString()
-    .padStart(decimals, '0')
+    .padStart(decimals, "0")
     .slice(0, precision)
-    .replace(/0+$/, '');
-  return `${negative ? '-' : ''}${whole.toLocaleString()}${frac ? `.${frac}` : ''}`;
+    .replace(/0+$/, "");
+  return `${negative ? "-" : ""}${whole.toLocaleString()}${frac ? `.${frac}` : ""}`;
 }
 
 export const formatEth = (wei: bigint, precision = 4) => `${formatUnits(wei, 18, precision)} ETH`;
@@ -43,7 +43,7 @@ export function formatBytes(bytes: number): string {
 export function decodeExtraData(hex: string): string {
   try {
     const bytes = new Uint8Array((hex.slice(2).match(/.{2}/g) ?? []).map((b) => parseInt(b, 16)));
-    const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     return /^[\x20-\x7E]*$/.test(text) && text.length > 0 ? text : hex;
   } catch {
     return hex;
@@ -51,9 +51,9 @@ export function decodeExtraData(hex: string): string {
 }
 
 export const TX_TYPES: Record<number, string> = {
-  0: 'Legacy',
-  1: 'Access List',
-  2: 'EIP-1559',
-  3: 'Blob',
-  4: 'EIP-7702',
+  0: "Legacy",
+  1: "Access List",
+  2: "EIP-1559",
+  3: "Blob",
+  4: "EIP-7702",
 };

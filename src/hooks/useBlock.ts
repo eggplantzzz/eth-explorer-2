@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { getBlock } from '../lib/rpc';
-import type { Block } from '../lib/types';
+import { useEffect, useState } from "react";
+import { getBlock } from "../lib/rpc";
+import type { Block } from "../lib/types";
 
 /** Fetches a single block including full transaction objects. */
 export function useBlock(blockNumber: number | null) {

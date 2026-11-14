@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useBlock } from '../hooks/useBlock';
-import { EXPLORER_URL, NETWORK } from '../lib/rpc';
+import { useState } from "react";
+import { useBlock } from "../hooks/useBlock";
+import { EXPLORER_URL, NETWORK } from "../lib/rpc";
 import {
   TX_TYPES,
   decodeExtraData,
@@ -9,7 +9,7 @@ import {
   formatGwei,
   percent,
   shortHash,
-} from '../lib/format';
+} from "../lib/format";
 
 interface Props {
   blockNumber: number | null;
@@ -34,26 +34,26 @@ export function BlockDetails({ blockNumber }: Props) {
   const contractCreations = block.transactions.filter((tx) => tx.to === null).length;
 
   const fields: [string, React.ReactNode][] = [
-    ['Hash', <span className="mono">{block.hash}</span>],
-    ['Parent Hash', <span className="mono">{block.parentHash}</span>],
-    ['Timestamp', `${new Date(block.timestamp * 1000).toLocaleString()} (${block.timestamp})`],
-    ['Fee Recipient', <a className="mono" href={`${explorer}/address/${block.miner}`} target="_blank" rel="noreferrer">{block.miner}</a>],
-    ['Transactions', `${block.transactionCount} (${contractCreations} contract creations)`],
-    ['Total ETH Transferred', formatEth(totalValue)],
-    ['Gas Used', `${block.gasUsed.toLocaleString()} (${percent(block.gasUsed, block.gasLimit)}%)`],
-    ['Gas Limit', block.gasLimit.toLocaleString()],
-    ['Base Fee', block.baseFeePerGas !== null ? formatGwei(block.baseFeePerGas, 4) : '—'],
-    ['Burned Fees', burned !== null ? formatEth(burned, 6) : '—'],
-    ['Blob Gas Used', block.blobGasUsed !== null ? block.blobGasUsed.toLocaleString() : '—'],
-    ['Withdrawals', block.withdrawalCount],
-    ['Size', formatBytes(block.size)],
-    ['Extra Data', <span className="mono">{decodeExtraData(block.extraData)}</span>],
+    ["Hash", <span className="mono">{block.hash}</span>],
+    ["Parent Hash", <span className="mono">{block.parentHash}</span>],
+    ["Timestamp", `${new Date(block.timestamp * 1000).toLocaleString()} (${block.timestamp})`],
+    ["Fee Recipient", <a className="mono" href={`${explorer}/address/${block.miner}`} target="_blank" rel="noreferrer">{block.miner}</a>],
+    ["Transactions", `${block.transactionCount} (${contractCreations} contract creations)`],
+    ["Total ETH Transferred", formatEth(totalValue)],
+    ["Gas Used", `${block.gasUsed.toLocaleString()} (${percent(block.gasUsed, block.gasLimit)}%)`],
+    ["Gas Limit", block.gasLimit.toLocaleString()],
+    ["Base Fee", block.baseFeePerGas !== null ? formatGwei(block.baseFeePerGas, 4) : "—"],
+    ["Burned Fees", burned !== null ? formatEth(burned, 6) : "—"],
+    ["Blob Gas Used", block.blobGasUsed !== null ? block.blobGasUsed.toLocaleString() : "—"],
+    ["Withdrawals", block.withdrawalCount],
+    ["Size", formatBytes(block.size)],
+    ["Extra Data", <span className="mono">{decodeExtraData(block.extraData)}</span>],
   ];
 
   return (
     <section className="panel">
       <h2>
-        Block #{block.number.toLocaleString()}{' '}
+        Block #{block.number.toLocaleString()}{" "}
         <a className="small" href={`${explorer}/block/${block.number}`} target="_blank" rel="noreferrer">
           view on explorer ↗
         </a>
@@ -99,7 +99,7 @@ export function BlockDetails({ blockNumber }: Props) {
                   ? formatGwei(tx.maxFeePerGas)
                   : tx.gasPrice !== null
                     ? formatGwei(tx.gasPrice)
-                    : '—'}
+                    : "—"}
               </td>
             </tr>
           ))}

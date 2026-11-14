@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { getBlocks, getLatestBlockNumber } from '../lib/rpc';
-import type { Block } from '../lib/types';
+import { useEffect, useRef, useState } from "react";
+import { getBlocks, getLatestBlockNumber } from "../lib/rpc";
+import type { Block } from "../lib/types";
 
 interface State {
   blocks: Block[];

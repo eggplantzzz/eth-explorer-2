@@ -1,15 +1,15 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from "react";
 
 interface Props {
   onSearch: (blockNumber: number) => void;
 }
 
 export function BlockSearch({ onSearch }: Props) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const n = Number(value.replace(/,/g, '').trim());
+    const n = Number(value.replace(/,/g, "").trim());
     if (Number.isInteger(n) && n >= 0) onSearch(n);
   }
 

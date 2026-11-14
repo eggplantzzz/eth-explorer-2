@@ -66,4 +66,4 @@ export interface Block {
   blobGasUsed: bigint | null;
 }
 
-export type BlockTag = number | 'latest' | 'finalized' | 'safe';
+export type BlockTag = number | "latest" | "finalized" | "safe";

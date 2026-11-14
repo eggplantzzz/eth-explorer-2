@@ -1,17 +1,17 @@
-import type { Block, BlockTag, RawBlock, RawTransaction, Transaction } from './types';
+import type { Block, BlockTag, RawBlock, RawTransaction, Transaction } from "./types";
 
 const API_KEY = import.meta.env.VITE_INFURA_API_KEY;
-export const NETWORK = import.meta.env.VITE_INFURA_NETWORK ?? 'mainnet';
+export const NETWORK = import.meta.env.VITE_INFURA_NETWORK ?? "mainnet";
 const RPC_URL = `https://${NETWORK}.infura.io/v3/${API_KEY}`;
 
 export const EXPLORER_URL: Record<string, string> = {
-  mainnet: 'https://etherscan.io',
-  sepolia: 'https://sepolia.etherscan.io',
-  holesky: 'https://holesky.etherscan.io',
+  mainnet: "https://etherscan.io",
+  sepolia: "https://sepolia.etherscan.io",
+  holesky: "https://holesky.etherscan.io",
 };
 
 interface JsonRpcResponse<T> {
-  jsonrpc: '2.0';
+  jsonrpc: "2.0";
   id: number;
   result?: T;
   error?: { code: number; message: string };
@@ -26,16 +26,16 @@ let nextId = 1;
 
 function assertConfigured() {
   if (!API_KEY) {
-    throw new Error('Missing VITE_INFURA_API_KEY. Add it to .env.local and restart the dev server.');
+    throw new Error("Missing VITE_INFURA_API_KEY. Add it to .env.local and restart the dev server.");
   }
 }
 
 export async function rpc<T>(method: string, params: unknown[] = []): Promise<T> {
   assertConfigured();
   const res = await fetch(RPC_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ jsonrpc: '2.0', id: nextId++, method, params }),
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: nextId++, method, params }),
   });
   if (!res.ok) throw new Error(`RPC HTTP ${res.status}: ${res.statusText}`);
 
@@ -49,10 +49,10 @@ export async function rpcBatch<T>(calls: RpcCall[]): Promise<T[]> {
   assertConfigured();
   if (calls.length === 0) return [];
 
-  const payload = calls.map((c, i) => ({ jsonrpc: '2.0', id: i, method: c.method, params: c.params }));
+  const payload = calls.map((c, i) => ({ jsonrpc: "2.0", id: i, method: c.method, params: c.params }));
   const res = await fetch(RPC_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
   if (!res.ok) throw new Error(`RPC HTTP ${res.status}: ${res.statusText}`);
@@ -72,7 +72,7 @@ export async function rpcBatch<T>(calls: RpcCall[]): Promise<T[]> {
 const toHex = (n: number) => `0x${n.toString(16)}`;
 const hexToNumber = (h: string) => Number.parseInt(h, 16);
 const hexToBigInt = (h?: string | null) => (h == null ? null : BigInt(h));
-const tagParam = (tag: BlockTag) => (typeof tag === 'number' ? toHex(tag) : tag);
+const tagParam = (tag: BlockTag) => (typeof tag === "number" ? toHex(tag) : tag);
 
 function parseTransaction(tx: RawTransaction): Transaction {
   return {
@@ -92,7 +92,7 @@ function parseTransaction(tx: RawTransaction): Transaction {
 }
 
 function parseBlock(raw: RawBlock): Block {
-  const fullTxs = raw.transactions.length > 0 && typeof raw.transactions[0] === 'object';
+  const fullTxs = raw.transactions.length > 0 && typeof raw.transactions[0] === "object";
   return {
     number: hexToNumber(raw.number),
     hash: raw.hash,
@@ -114,22 +114,22 @@ function parseBlock(raw: RawBlock): Block {
 // ---- Public API ----
 
 export async function getLatestBlockNumber(): Promise<number> {
-  return hexToNumber(await rpc<string>('eth_blockNumber'));
+  return hexToNumber(await rpc<string>("eth_blockNumber"));
 }
 
 export async function getGasPrice(): Promise<bigint> {
-  return BigInt(await rpc<string>('eth_gasPrice'));
+  return BigInt(await rpc<string>("eth_gasPrice"));
 }
 
 export async function getBlock(tag: BlockTag, fullTransactions = false): Promise<Block | null> {
-  const raw = await rpc<RawBlock | null>('eth_getBlockByNumber', [tagParam(tag), fullTransactions]);
+  const raw = await rpc<RawBlock | null>("eth_getBlockByNumber", [tagParam(tag), fullTransactions]);
   return raw ? parseBlock(raw) : null;
 }
 
 /** Fetch several blocks (header + tx hashes only) in one batched request. */
 export async function getBlocks(numbers: number[]): Promise<Block[]> {
   const raws = await rpcBatch<RawBlock | null>(
-    numbers.map((n) => ({ method: 'eth_getBlockByNumber', params: [toHex(n), false] })),
+    numbers.map((n) => ({ method: "eth_getBlockByNumber", params: [toHex(n), false] })),
   );
   return raws.filter((b): b is RawBlock => b !== null).map(parseBlock);
 }

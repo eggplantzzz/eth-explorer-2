@@ -1,6 +1,6 @@
-import type { Block } from '../lib/types';
-import { formatEth, formatGwei, percent, shortHash, timeAgo } from '../lib/format';
-import { useNow } from '../hooks/useNow';
+import type { Block } from "../lib/types";
+import { formatEth, formatGwei, percent, shortHash, timeAgo } from "../lib/format";
+import { useNow } from "../hooks/useNow";
 
 interface Props {
   blocks: Block[];
@@ -32,7 +32,7 @@ export function BlockList({ blocks, selected, onSelect }: Props) {
             return (
               <tr
                 key={b.number}
-                className={b.number === selected ? 'selected' : undefined}
+                className={b.number === selected ? "selected" : undefined}
                 onClick={() => onSelect(b.number)}
               >
                 <td className="mono">{b.number.toLocaleString()}</td>
@@ -41,14 +41,14 @@ export function BlockList({ blocks, selected, onSelect }: Props) {
                 <td>
                   <div className="gas-bar" title={`${b.gasUsed.toLocaleString()} / ${b.gasLimit.toLocaleString()}`}>
                     <div
-                      className={`gas-fill ${util > 50 ? 'high' : 'low'}`}
+                      className={`gas-fill ${util > 50 ? "high" : "low"}`}
                       style={{ width: `${Math.min(util, 100)}%` }}
                     />
                     <span>{util}%</span>
                   </div>
                 </td>
-                <td>{b.baseFeePerGas !== null ? formatGwei(b.baseFeePerGas) : '—'}</td>
-                <td>{b.baseFeePerGas !== null ? formatEth(b.baseFeePerGas * b.gasUsed) : '—'}</td>
+                <td>{b.baseFeePerGas !== null ? formatGwei(b.baseFeePerGas) : "—"}</td>
+                <td>{b.baseFeePerGas !== null ? formatEth(b.baseFeePerGas * b.gasUsed) : "—"}</td>
                 <td className="mono">{shortHash(b.miner, 4)}</td>
               </tr>
             );
