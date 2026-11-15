@@ -5,7 +5,6 @@ import { BlockList } from "./components/BlockList";
 import { BlockDetails } from "./components/BlockDetails";
 import { BlockSearch } from "./components/BlockSearch";
 import { EtherPrice } from "./components/EtherPrice";
-import { useEtherPrice } from "./hooks/useEtherPrice";
 import { NETWORK } from "./lib/rpc";
 import "./App.css";
 
@@ -15,9 +14,7 @@ const POLL_MS = 12_000; // ~1 Ethereum slot
 export default function App() {
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);
   const [selected, setSelected] = useState<number | null>(null);
-  const [etherPrice, setEtherPrice] = useState<number>();
   const { blocks, loading, error, lastUpdated } = useLatestBlocks(BLOCK_COUNT, POLL_MS, pollingEnabled);
-  useEtherPrice(setEtherPrice);
 
   const togglePollingButton = function () {
     return (
@@ -48,7 +45,7 @@ export default function App() {
 
       {error && <div className="panel error">⚠️ {error}</div>}
 
-      <EtherPrice etherPrice={etherPrice} />
+      <EtherPrice />
 
       {loading && blocks.length === 0 ? (
         <div className="panel">Loading latest blocks…</div>

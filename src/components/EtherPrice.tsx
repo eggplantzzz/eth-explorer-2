@@ -1,4 +1,10 @@
-export function EtherPrice({ etherPrice }: { etherPrice?: number }) {
+import { useState } from "react";
+import { useEtherPrice } from "../hooks/useEtherPrice";
+
+export function EtherPrice() {
+  const [etherPrice, setEtherPrice] = useState<number>();
+  useEtherPrice(setEtherPrice);
+
   if (etherPrice === undefined) {
     return null;
   } else {
