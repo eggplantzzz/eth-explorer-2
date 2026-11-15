@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLatestBlocks } from "./hooks/useLatestBlocks";
+import { AiSection } from "./components/AiSection";
 import { NetworkStats } from "./components/NetworkStats";
 import { BlockList } from "./components/BlockList";
 import { BlockDetails } from "./components/BlockDetails";
@@ -49,6 +50,7 @@ export default function App() {
       {error && <div className="panel error">⚠️ {error}</div>}
 
       <EtherPrice etherPrice={etherPrice} />
+      <AiSection />
 
       {loading && blocks.length === 0 ? (
         <div className="panel">Loading latest blocks…</div>
