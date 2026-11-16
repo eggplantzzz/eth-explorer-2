@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLatestBlocks } from "./hooks/useLatestBlocks";
 import { NetworkStats } from "./components/NetworkStats";
+import { useAnthropic } from "./hooks/useAnthropic";
 import { BlockList } from "./components/BlockList";
 import { BlockDetails } from "./components/BlockDetails";
 import { BlockSearch } from "./components/BlockSearch";
@@ -15,6 +16,7 @@ export default function App() {
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);
   const [selected, setSelected] = useState<number | null>(null);
   const { blocks, loading, error, lastUpdated } = useLatestBlocks(BLOCK_COUNT, POLL_MS, pollingEnabled);
+  useAnthropic();
 
   return (
     <div className="app">
