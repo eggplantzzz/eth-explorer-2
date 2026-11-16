@@ -16,18 +16,6 @@ export default function App() {
   const [selected, setSelected] = useState<number | null>(null);
   const { blocks, loading, error, lastUpdated } = useLatestBlocks(BLOCK_COUNT, POLL_MS, pollingEnabled);
 
-  const togglePollingButton = function () {
-    return (
-      <div className="toggle">
-        <
-          button
-          onClick={() => setPollingEnabled(!pollingEnabled)}
-        >
-            {pollingEnabled ? "Disable" : "Enable"} Polling
-        </button>
-      </div>
-    )
-  }
 
   return (
     <div className="app">
@@ -40,7 +28,6 @@ export default function App() {
           )}
         </div>
         <BlockSearch onSearch={setSelected} />
-        {togglePollingButton()}
       </header>
 
       {error && <div className="panel error">⚠️ {error}</div>}
@@ -51,9 +38,9 @@ export default function App() {
         <div className="panel">Loading latest blocks…</div>
       ) : (
         <>
-            <NetworkStats blocks={blocks} />
+          <NetworkStats blocks={blocks} />
           <main className="grid">
-            <BlockList blocks={blocks} selected={selected} onSelect={setSelected} />
+              <BlockList setPollingEnabled={setPollingEnabled} pollingEnabled={pollingEnabled}  blocks={blocks} selected={selected} onSelect={setSelected} />
             <BlockDetails blockNumber={selected} />
           </main>
         </>

@@ -103,3 +103,10 @@ a:hover { text-decoration: underline; }
 .mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em; }
 .muted { color: var(--muted); }
 .small { font-size: 0.75rem; font-weight: normal; }
+
+.latest-blocks-header {
+  display: flex;
+}
+.latest-blocks-text {
+  display: inline; margin-right: 1em;
+}

@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import type { Block } from "../lib/types";
 import { formatEth, formatGwei, percent, shortHash, timeAgo } from "../lib/format";
 import { useNow } from "../hooks/useNow";
@@ -6,14 +7,32 @@ interface Props {
   blocks: Block[];
   selected: number | null;
   onSelect: (blockNumber: number) => void;
+  pollingEnabled: boolean;
+  setPollingEnabled: Dispatch<SetStateAction<boolean>>;
 }
 
-export function BlockList({ blocks, selected, onSelect }: Props) {
+export function BlockList({ setPollingEnabled, pollingEnabled, blocks, selected, onSelect }: Props) {
   const now = useNow();
+
+  const togglePollingButton = function () {
+    return (
+      <div className="toggle">
+        <
+          button
+          onClick={() => setPollingEnabled(!pollingEnabled)}
+        >
+            {pollingEnabled ? "Disable" : "Enable"} Polling
+        </button>
+      </div>
+    )
+  }
 
   return (
     <section className="panel">
-      <h2>Latest Blocks</h2>
+      <div className={"latest-blocks-header"}>
+        <h2 className={"latest-blocks-text"}>Latest Blocks</h2>
+        {togglePollingButton()}
+      </div>
       <table className="table">
         <thead>
           <tr>
