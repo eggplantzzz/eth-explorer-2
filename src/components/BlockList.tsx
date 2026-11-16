@@ -31,7 +31,7 @@ export function BlockList({ lastUpdated, setPollingEnabled, pollingEnabled, bloc
   const lastUpdatedText = function () {
     return (
       lastUpdated && (
-        <span className="muted small"> updated {new Date(lastUpdated).toLocaleTimeString()}</span>
+        <div className="muted small"> updated {new Date(lastUpdated).toLocaleTimeString()}</div>
       )
     )
   }

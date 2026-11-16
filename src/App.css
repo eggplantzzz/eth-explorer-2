@@ -64,7 +64,7 @@ a:hover { text-decoration: underline; }
   background: var(--panel); border: 1px solid var(--border);
   border-radius: 8px; padding: 1.25rem; overflow-x: auto;
 }
-.panel h2 { margin-top: 0; font-size: 1.1rem; }
+.panel h2 { font-size: 1.1rem; }
 .panel h3 { font-size: 1rem; margin-top: 1.5rem; }
 .panel.error { border-color: var(--red); color: var(--red); margin-bottom: 1rem; }
 
@@ -104,12 +104,6 @@ a:hover { text-decoration: underline; }
 .muted { color: var(--muted); }
 .small { font-size: 0.75rem; font-weight: normal; }
 
-.latest-blocks-header {
-  display: flex;
-}
-.latest-blocks-text {
-  display: inline; margin-right: 1em;
-}
-.toggle {
-  margin-right: 1em;
-}
+.latest-blocks-header { display: flex; align-items: center; }
+.latest-blocks-text { display: inline; margin-right: 1em;  }
+.toggle { margin-right: 1em; }
