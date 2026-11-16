@@ -9,9 +9,10 @@ interface Props {
   onSelect: (blockNumber: number) => void;
   pollingEnabled: boolean;
   setPollingEnabled: Dispatch<SetStateAction<boolean>>;
+  lastUpdated: number | null;
 }
 
-export function BlockList({ setPollingEnabled, pollingEnabled, blocks, selected, onSelect }: Props) {
+export function BlockList({ lastUpdated, setPollingEnabled, pollingEnabled, blocks, selected, onSelect }: Props) {
   const now = useNow();
 
   const togglePollingButton = function () {
@@ -27,11 +28,20 @@ export function BlockList({ setPollingEnabled, pollingEnabled, blocks, selected,
     )
   }
 
+  const lastUpdatedText = function () {
+    return (
+      lastUpdated && (
+        <span className="muted small"> updated {new Date(lastUpdated).toLocaleTimeString()}</span>
+      )
+    )
+  }
+
   return (
     <section className="panel">
       <div className={"latest-blocks-header"}>
         <h2 className={"latest-blocks-text"}>Latest Blocks</h2>
         {togglePollingButton()}
+        {lastUpdatedText()}
       </div>
       <table className="table">
         <thead>
